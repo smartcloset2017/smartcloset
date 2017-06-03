@@ -26,10 +26,8 @@ export default class imageView extends Component {
     this.setState({
       imageArray: testDataToComponent,
     });
-    console.log('test')
   }
   render() {
-    console.log('here')
     return (
       <div>
         {this.state.imageArray}
