@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.png';
-import './App.css';
-import ImageView from './component/imageView';
 
 const testData = [
   'https://s-media-cache-ak0.pinimg.com/originals/eb/30/07/eb3007d8ffa052d14ec5241d53026340.jpg',
@@ -15,21 +12,28 @@ const testData = [
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3uKiSYZsn4o4w3_MV1T3JgCMdzsuAYHlu9dUA94jDQQxSExsHbA',
 ];
 
-class App extends Component {
+export default class imageView extends Component {
+  constructor () {
+    super();
+    this.state = {
+      imageArray: [],
+    };
+  }
+  componentDidMount() {
+    const testDataToComponent = testData.map(data => {
+      return <img src = {data} alt = '' key = {data}/>;
+    });
+    this.setState({
+      imageArray: testDataToComponent,
+    });
+    console.log('test')
+  }
   render() {
-
+    console.log('here')
     return (
-      <div className="App">
-        <div className="App-header">
-          <h2>Welcome to smartCloset</h2>
-          <img src={logo} className="App-logo" />
-        </div>
-        <div>
-          <ImageView />
-        </div>
+      <div>
+        {this.state.imageArray}
       </div>
     );
   }
 }
-
-export default App;
