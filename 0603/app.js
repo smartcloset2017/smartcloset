@@ -5,11 +5,16 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var http = require('http');
+var router = express.Router();
+
+
 var index = require('./routes/index');
 var users = require('./routes/users');
+var getData = require('./routes/getData');
 
 var app = express();
-
+var cors = require('cors');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -19,11 +24,13 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/getData',getData);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -31,6 +38,27 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+/*
+router.post('/',function(req,res,next){
+	console.log('post server call');
+	var msg = req.body.msg;
+	//res.send({result:true,msg:msg});
+});
+
+app.get('/get',function(req,res,next){
+	console.log('post server call');
+	var msg = {
+	temp: 'temp',
+};
+	res.json(msg);
+});
+*/
+
+
+
+module.exports = router;
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
