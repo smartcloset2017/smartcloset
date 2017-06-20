@@ -22,8 +22,11 @@ class App extends Component {
         'http://hei.hankyung.com/news/app/imgview.php?aid=2010100811387&photoid=201010080995&size=1',
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3uKiSYZsn4o4w3_MV1T3JgCMdzsuAYHlu9dUA94jDQQxSExsHbA',
       ],
+      likes: [],
     };
     this.getImage = this.getImage.bind(this);
+    this.updateLikes = this.updateLikes.bind(this);
+    this.showLikes = this.showLikes.bind(this);
   }
   getImage() {
     axios.get(URL)
@@ -36,8 +39,24 @@ class App extends Component {
         })
       }
     })
-
   }
+  updateLikes(url) {
+    const newLikes = this.state.likes.slice();
+    if (newLikes.indexOf(url) === -1)
+      newLikes.push(url);
+    this.setState({
+      likes: newLikes,
+    })
+  }
+
+  showLikes() {
+    const URL = [...this.state.likes];
+    console.log(URL)
+    this.setState({
+      imageData: URL,
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -46,11 +65,12 @@ class App extends Component {
             <button onClick={this.getImage}>
               test button
             </button>
-          <img src={logo} className="App-logo" />
+          <img src={logo} className="App-logo" onClick={this.showLikes}/>
         </div>
         <div>
           <ImageView
-            imageData={this.state.imageData}/>
+            imageData={this.state.imageData}
+            updateLikes={this.updateLikes}/>
         </div>
       </div>
     );
